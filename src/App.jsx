@@ -10,24 +10,24 @@ import { TbArrowsExchange } from 'react-icons/tb';
 import { AiOutlineFileText } from 'react-icons/ai';
 
 const formatDate = (date) => {
-  const months = ['January', 'February', 'March', 'April', 'May', 'June', 
-                  'July', 'August', 'September', 'October', 'November', 'December'];
+  const months = ['January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December'];
   const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-  
+
   const dayName = days[date.getUTCDay()];
   const monthName = months[date.getUTCMonth()];
   const dayOfMonth = date.getUTCDate();
   const year = date.getUTCFullYear();
-  
+
   const hours = date.getUTCHours();
   const minutes = String(date.getUTCMinutes()).padStart(2, '0');
   const seconds = String(date.getUTCSeconds()).padStart(2, '0');
   const milliseconds = String(date.getUTCMilliseconds()).padStart(3, '0');
   const ampm = hours >= 12 ? 'PM' : 'AM';
   const hours12 = hours % 12 || 12;
-  
+
   const gmtString = `${dayName}, ${monthName} ${dayOfMonth}, ${year} ${hours12}:${minutes}:${seconds}.${milliseconds} ${ampm}`;
-  
+
   // Local time
   const localDayName = days[date.getDay()];
   const localMonthName = months[date.getMonth()];
@@ -39,15 +39,15 @@ const formatDate = (date) => {
   const localMilliseconds = String(date.getMilliseconds()).padStart(3, '0');
   const localAmpm = localHours >= 12 ? 'PM' : 'AM';
   const localHours12 = localHours % 12 || 12;
-  
+
   const offset = -date.getTimezoneOffset();
   const offsetHours = Math.floor(Math.abs(offset) / 60);
   const offsetMinutes = Math.abs(offset) % 60;
   const offsetSign = offset >= 0 ? '+' : '-';
   const offsetString = `GMT${offsetSign}${String(offsetHours).padStart(2, '0')}:${String(offsetMinutes).padStart(2, '0')}`;
-  
+
   const localString = `${localDayName}, ${localMonthName} ${localDayOfMonth}, ${localYear} ${localHours12}:${localMinutes}:${localSeconds}.${localMilliseconds} ${localAmpm} ${offsetString}`;
-  
+
   // Calculate relative time
   const now = Date.now();
   const diff = date.getTime() - now;
@@ -55,7 +55,7 @@ const formatDate = (date) => {
   const diffDays = Math.floor(Math.abs(diff) / (24 * 60 * 60 * 1000));
   const diffHours = Math.floor(Math.abs(diff) / (60 * 60 * 1000));
   const diffMinutes = Math.floor(Math.abs(diff) / (60 * 1000));
-  
+
   let relative = '';
   if (diffYears > 0) {
     relative = diff > 0 ? `In ${diffYears} year${diffYears > 1 ? 's' : ''}` : `${diffYears} year${diffYears > 1 ? 's' : ''} ago`;
@@ -68,7 +68,7 @@ const formatDate = (date) => {
   } else {
     relative = 'Just now';
   }
-  
+
   return {
     gmt: gmtString,
     local: localString,
@@ -215,7 +215,7 @@ const JSONFormatter = () => {
               </div>
             </div>
             <p className="json-description">Paste your JSON data to format and validate it.</p>
-            
+
             <div className="json-action-buttons">
               <button className="json-action-btn" onClick={handleValidate}>Validate</button>
               <button className="json-action-btn" onClick={handleMinify}>Minify</button>
@@ -261,7 +261,7 @@ const JSONFormatter = () => {
           <div className="json-faq-list">
             {faqs.map((faq, index) => (
               <div key={index} className="json-faq-item">
-                <button 
+                <button
                   className={`json-faq-question ${expandedFaq === index ? 'active' : ''}`}
                   onClick={() => toggleFaq(index)}
                 >
@@ -304,24 +304,24 @@ const Header = ({ activeTab, setActiveTab }) => {
     <header className="header">
       <div className="logo">DevUtils</div>
       <nav className="nav">
-        <a 
-          href="#" 
+        <a
+          href="#"
           className={`nav-link ${activeTab === 'dashboard' ? 'active' : ''}`}
           onClick={(e) => { e.preventDefault(); setActiveTab('dashboard'); }}
         >
           <MdDashboard size={14} />
           Converters
         </a>
-        <a 
-          href="#" 
+        <a
+          href="#"
           className={`nav-link ${activeTab === 'calculator' ? 'active' : ''}`}
           onClick={(e) => { e.preventDefault(); setActiveTab('calculator'); }}
         >
           <FaCalculator size={14} />
           Calculator
         </a>
-        <a 
-          href="#" 
+        <a
+          href="#"
           className={`nav-link ${activeTab === 'timezone' ? 'active' : ''}`}
           onClick={(e) => { e.preventDefault(); setActiveTab('timezone'); }}
         >
@@ -336,8 +336,8 @@ const Header = ({ activeTab, setActiveTab }) => {
           <MdHistory size={14} />
           History
         </a> */}
-        <a 
-          href="#" 
+        <a
+          href="#"
           className={`nav-link ${activeTab === 'presets' ? 'active' : ''}`}
           onClick={(e) => { e.preventDefault(); setActiveTab('presets'); }}
         >
@@ -352,7 +352,7 @@ const Header = ({ activeTab, setActiveTab }) => {
           <MdTimeline size={14} />
           Timeline
         </a> */}
-        <div 
+        <div
           className="nav-dropdown"
           onMouseEnter={() => setShowEncodersDropdown(true)}
           onMouseLeave={() => setShowEncodersDropdown(false)}
@@ -397,7 +397,7 @@ const Header = ({ activeTab, setActiveTab }) => {
         </div>
       </nav>
       <div className="header-right">
-        <button 
+        <button
           className={`chat-icon-btn ${activeTab === 'comments' ? 'active' : ''}`}
           onClick={() => setActiveTab('comments')}
           title="Feedback & Comments"
@@ -441,7 +441,7 @@ const EpochConverter = () => {
       setTimeout(() => setHasError(false), 2000);
       return;
     }
-    
+
     const epoch = parseInt(epochInput, 10);
     if (!isNaN(epoch)) {
       const dateInfo = formatDate(new Date(epoch * 1000));
@@ -459,7 +459,7 @@ const EpochConverter = () => {
         <span className="card-title">Epoch & Unix Timestamp</span>
       </div>
       <div className="card-desc">Convert Unix epoch timestamps (seconds since January 1, 1970) to human-readable dates. Epoch time is widely used in programming, databases, and system logs for consistent time representation across different timezones.</div>
-      
+
       <div className="epoch-current-row">
         <span className="epoch-label">Current Timestamp</span>
         <div className="epoch-current-display">
@@ -474,10 +474,10 @@ const EpochConverter = () => {
       <div className="epoch-input-section">
         <label className="epoch-input-label">Enter Epoch Timestamp</label>
         <div className="epoch-input-row">
-          <input 
+          <input
             className={`epoch-input ${hasError ? 'error' : ''}`}
-            type="text" 
-            value={epochInput} 
+            type="text"
+            value={epochInput}
             onChange={e => setEpochInput(e.target.value)}
             placeholder="1672531200"
           />
@@ -531,47 +531,47 @@ const DateToEpochConverter = () => {
   const handleConvert = () => {
     // Create date string
     const dateStr = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}T${hour.padStart(2, '0')}:${minute.padStart(2, '0')}:${second.padStart(2, '0')}`;
-    
+
     let dt;
     if (isLocalTime) {
       dt = new Date(dateStr);
     } else {
       dt = new Date(dateStr + 'Z');
     }
-    
+
     if (!isNaN(dt.getTime())) {
       const epochSeconds = Math.floor(dt.getTime() / 1000);
       const epochMillis = dt.getTime();
       const epochMicroseconds = epochMillis * 1000;
-      
+
       // Format GMT date
-      const gmtOptions = { 
-        weekday: 'long', 
-        year: 'numeric', 
-        month: 'long', 
-        day: 'numeric', 
-        hour: '2-digit', 
-        minute: '2-digit', 
+      const gmtOptions = {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
         second: '2-digit',
         timeZone: 'UTC',
-        hour12: true 
+        hour12: true
       };
       const gmtDate = dt.toLocaleString('en-US', gmtOptions);
-      
+
       // Format local date with timezone
-      const localOptions = { 
-        weekday: 'long', 
-        year: 'numeric', 
-        month: 'long', 
-        day: 'numeric', 
-        hour: '2-digit', 
-        minute: '2-digit', 
+      const localOptions = {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
         second: '2-digit',
         hour12: true,
         timeZoneName: 'longOffset'
       };
       const localDate = dt.toLocaleString('en-US', localOptions);
-      
+
       setResult({
         epoch: epochSeconds,
         millis: epochMillis,
@@ -586,7 +586,7 @@ const DateToEpochConverter = () => {
     <div className="converter-card date-card">
       <span className="card-title">Date to Epoch</span>
       <span className="card-desc">Convert any date and time into Unix epoch timestamp. Perfect for scheduling tasks, setting expiration times, or working with APIs that require epoch format. Supports both local time and UTC conversion.</span>
-      
+
       <div className="date-time-inputs">
         <div className="input-labels">
           <span>Mon</span>
@@ -596,53 +596,53 @@ const DateToEpochConverter = () => {
           <span className="time-label">Min</span>
           <span className="time-label">Sec</span>
         </div>
-        
+
         <div className="date-time-inputs-row">
-          <input 
-            type="text" 
-            value={month} 
+          <input
+            type="text"
+            value={month}
             onChange={e => setMonth(e.target.value)}
             className="date-part-input"
             maxLength="2"
           />
           <span className="input-divider">/</span>
-          <input 
-            type="text" 
-            value={day} 
+          <input
+            type="text"
+            value={day}
             onChange={e => setDay(e.target.value)}
             className="date-part-input"
             maxLength="2"
           />
           <span className="input-divider">/</span>
-          <input 
-            type="text" 
-            value={year} 
+          <input
+            type="text"
+            value={year}
             onChange={e => setYear(e.target.value)}
             className="date-part-input year-input"
             maxLength="4"
           />
-          
+
           <span className="section-spacer"></span>
-          
-          <input 
-            type="text" 
-            value={hour} 
+
+          <input
+            type="text"
+            value={hour}
             onChange={e => setHour(e.target.value)}
             className="time-part-input"
             maxLength="2"
           />
           <span className="input-divider">:</span>
-          <input 
-            type="text" 
-            value={minute} 
+          <input
+            type="text"
+            value={minute}
             onChange={e => setMinute(e.target.value)}
             className="time-part-input"
             maxLength="2"
           />
           <span className="input-divider">:</span>
-          <input 
-            type="text" 
-            value={second} 
+          <input
+            type="text"
+            value={second}
             onChange={e => setSecond(e.target.value)}
             className="time-part-input"
             maxLength="2"
@@ -651,8 +651,8 @@ const DateToEpochConverter = () => {
 
         <div className="timezone-toggle">
           <label className="toggle-label">
-            <input 
-              type="checkbox" 
+            <input
+              type="checkbox"
               checked={isLocalTime}
               onChange={e => setIsLocalTime(e.target.checked)}
             />
@@ -678,7 +678,7 @@ const DateToEpochConverter = () => {
                 <td className="table-label">Epoch (seconds)</td>
                 <td className="table-value">{result.epoch}</td>
                 <td className="table-action">
-                  <button 
+                  <button
                     className={`table-copy-btn ${copiedRow === 'epoch' ? 'copied' : ''}`}
                     onClick={() => handleCopy(result.epoch, 'epoch')}
                   >
@@ -690,7 +690,7 @@ const DateToEpochConverter = () => {
                 <td className="table-label">Milliseconds</td>
                 <td className="table-value">{result.millis}</td>
                 <td className="table-action">
-                  <button 
+                  <button
                     className={`table-copy-btn ${copiedRow === 'millis' ? 'copied' : ''}`}
                     onClick={() => handleCopy(result.millis, 'millis')}
                   >
@@ -702,7 +702,7 @@ const DateToEpochConverter = () => {
                 <td className="table-label">Microseconds</td>
                 <td className="table-value">{result.micros}</td>
                 <td className="table-action">
-                  <button 
+                  <button
                     className={`table-copy-btn ${copiedRow === 'micros' ? 'copied' : ''}`}
                     onClick={() => handleCopy(result.micros, 'micros')}
                   >
@@ -714,7 +714,7 @@ const DateToEpochConverter = () => {
                 <td className="table-label">GMT</td>
                 <td className="table-value">{result.gmt}</td>
                 <td className="table-action">
-                  <button 
+                  <button
                     className={`table-copy-btn ${copiedRow === 'gmt' ? 'copied' : ''}`}
                     onClick={() => handleCopy(result.gmt, 'gmt')}
                   >
@@ -726,7 +726,7 @@ const DateToEpochConverter = () => {
                 <td className="table-label">Your Timezone</td>
                 <td className="table-value">{result.local}</td>
                 <td className="table-action">
-                  <button 
+                  <button
                     className={`table-copy-btn ${copiedRow === 'local' ? 'copied' : ''}`}
                     onClick={() => handleCopy(result.local, 'local')}
                   >
@@ -822,7 +822,7 @@ const BatchConverter = () => {
         </button>
       </div>
       <span className="card-desc">Convert multiple epoch timestamps simultaneously - perfect for processing log files, analyzing time-series data, or converting large datasets. Enter one timestamp per line and sort results chronologically.</span>
-      
+
       <div className="batch-content">
         <div className="batch-input-section">
           <label className="batch-label">Input Timestamps</label>
@@ -909,8 +909,8 @@ const ConversionHistory = () => {
   };
 
   const filteredHistory = history.filter(item => {
-    const matchesSearch = item.input.toLowerCase().includes(searchTerm.toLowerCase()) || 
-                          item.result.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesSearch = item.input.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.result.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesFilter = filterType === 'all' || item.type === filterType;
     return matchesSearch && matchesFilter;
   });
@@ -918,17 +918,17 @@ const ConversionHistory = () => {
   return (
     <main className="main-content">
       <h1 className="main-title"><MdHistory size={24} style={{ marginRight: '8px' }} />Conversion History</h1>
-      
+
       <div className="content-with-ad">
         <div className="main-section">
           <div className="feature-description">
             <p>View and manage all your timestamp conversions in one place. Search through your history, filter by conversion type, and export your data to JSON or CSV format. Your history is automatically saved in your browser.</p>
           </div>
-          
+
           <div className="history-container">
             <div className="history-controls">
-              <input 
-                type="text" 
+              <input
+                type="text"
                 className="history-search"
                 placeholder="Search history..."
                 value={searchTerm}
@@ -1052,130 +1052,130 @@ const EpochCalculator = () => {
   return (
     <main className="main-content">
       <h1 className="main-title"><FaCalculator size={24} style={{ marginRight: '8px' }} />Epoch Calculator</h1>
-      
+
       <div className="content-with-ad">
         <div className="main-section">
           <div className="feature-description">
             <p>Perform advanced calculations with epoch timestamps. Add or subtract time intervals, calculate the duration between two timestamps, or determine the number of business days between dates.</p>
           </div>
-          
+
           <div className="calculator-grid">
-        <div className="calculator-card">
-          <h2 className="card-title">Time Math</h2>
-          <p className="card-desc">Add or subtract time from any epoch timestamp</p>
-          
-          <div className="calc-input-group">
-            <label>Base Epoch</label>
-            <input 
-              type="text" 
-              value={baseEpoch} 
-              onChange={(e) => setBaseEpoch(e.target.value)}
-              className="calc-input"
-              placeholder="1672531200"
-            />
-          </div>
+            <div className="calculator-card">
+              <h2 className="card-title">Time Math</h2>
+              <p className="card-desc">Add or subtract time from any epoch timestamp</p>
 
-          <div className="calc-operation">
-            <select className="calc-select" value={operation} onChange={(e) => setOperation(e.target.value)}>
-              <option value="add">Add</option>
-              <option value="subtract">Subtract</option>
-            </select>
-            <input 
-              type="number" 
-              value={value} 
-              onChange={(e) => setValue(e.target.value)}
-              className="calc-input"
-              min="0"
-            />
-            <select className="calc-select" value={unit} onChange={(e) => setUnit(e.target.value)}>
-              <option value="seconds">Seconds</option>
-              <option value="minutes">Minutes</option>
-              <option value="hours">Hours</option>
-              <option value="days">Days</option>
-              <option value="weeks">Weeks</option>
-              <option value="months">Months</option>
-              <option value="years">Years</option>
-            </select>
-          </div>
-
-          <button className="calc-btn" onClick={calculateTimemath}>Calculate</button>
-
-          {result && (
-            <div className="calc-result">
-              <div className="calc-result-item">
-                <span className="calc-label">Result Epoch:</span>
-                <span className="calc-value">{result.epoch}</span>
+              <div className="calc-input-group">
+                <label>Base Epoch</label>
+                <input
+                  type="text"
+                  value={baseEpoch}
+                  onChange={(e) => setBaseEpoch(e.target.value)}
+                  className="calc-input"
+                  placeholder="1672531200"
+                />
               </div>
-              <div className="calc-result-item">
-                <span className="calc-label">GMT:</span>
-                <span className="calc-value">{result.date.gmt}</span>
+
+              <div className="calc-operation">
+                <select className="calc-select" value={operation} onChange={(e) => setOperation(e.target.value)}>
+                  <option value="add">Add</option>
+                  <option value="subtract">Subtract</option>
+                </select>
+                <input
+                  type="number"
+                  value={value}
+                  onChange={(e) => setValue(e.target.value)}
+                  className="calc-input"
+                  min="0"
+                />
+                <select className="calc-select" value={unit} onChange={(e) => setUnit(e.target.value)}>
+                  <option value="seconds">Seconds</option>
+                  <option value="minutes">Minutes</option>
+                  <option value="hours">Hours</option>
+                  <option value="days">Days</option>
+                  <option value="weeks">Weeks</option>
+                  <option value="months">Months</option>
+                  <option value="years">Years</option>
+                </select>
               </div>
-              <div className="calc-result-item">
-                <span className="calc-label">Local:</span>
-                <span className="calc-value">{result.date.local}</span>
-              </div>
-            </div>
-          )}
-        </div>
 
-        <div className="calculator-card">
-          <h2 className="card-title">Duration Calculator</h2>
-          <p className="card-desc">Calculate time difference between two epochs</p>
-          
-          <div className="calc-input-group">
-            <label>First Epoch</label>
-            <input 
-              type="text" 
-              value={epoch1} 
-              onChange={(e) => setEpoch1(e.target.value)}
-              className="calc-input"
-              placeholder="1672531200"
-            />
-          </div>
+              <button className="calc-btn" onClick={calculateTimemath}>Calculate</button>
 
-          <div className="calc-input-group">
-            <label>Second Epoch</label>
-            <input 
-              type="text" 
-              value={epoch2} 
-              onChange={(e) => setEpoch2(e.target.value)}
-              className="calc-input"
-              placeholder="1704067200"
-            />
-          </div>
-
-          <button className="calc-btn" onClick={calculateDuration}>Calculate Difference</button>
-
-          {duration && (
-            <div className="calc-result">
-              <div className="duration-summary">
-                <div className="duration-total">{duration.total.toLocaleString()} seconds</div>
-                <div className="duration-breakdown">
-                  <div className="duration-part">
-                    <span className="duration-value">{duration.days}</span>
-                    <span className="duration-unit">days</span>
+              {result && (
+                <div className="calc-result">
+                  <div className="calc-result-item">
+                    <span className="calc-label">Result Epoch:</span>
+                    <span className="calc-value">{result.epoch}</span>
                   </div>
-                  <div className="duration-part">
-                    <span className="duration-value">{duration.hours}</span>
-                    <span className="duration-unit">hours</span>
+                  <div className="calc-result-item">
+                    <span className="calc-label">GMT:</span>
+                    <span className="calc-value">{result.date.gmt}</span>
                   </div>
-                  <div className="duration-part">
-                    <span className="duration-value">{duration.minutes}</span>
-                    <span className="duration-unit">min</span>
-                  </div>
-                  <div className="duration-part">
-                    <span className="duration-value">{duration.seconds}</span>
-                    <span className="duration-unit">sec</span>
+                  <div className="calc-result-item">
+                    <span className="calc-label">Local:</span>
+                    <span className="calc-value">{result.date.local}</span>
                   </div>
                 </div>
-                <div className="duration-direction">
-                  {duration.isE1Earlier ? 'First epoch is earlier' : 'Second epoch is earlier'}
-                </div>
-              </div>
+              )}
             </div>
-          )}
-        </div>
-      </div>
+
+            <div className="calculator-card">
+              <h2 className="card-title">Duration Calculator</h2>
+              <p className="card-desc">Calculate time difference between two epochs</p>
+
+              <div className="calc-input-group">
+                <label>First Epoch</label>
+                <input
+                  type="text"
+                  value={epoch1}
+                  onChange={(e) => setEpoch1(e.target.value)}
+                  className="calc-input"
+                  placeholder="1672531200"
+                />
+              </div>
+
+              <div className="calc-input-group">
+                <label>Second Epoch</label>
+                <input
+                  type="text"
+                  value={epoch2}
+                  onChange={(e) => setEpoch2(e.target.value)}
+                  className="calc-input"
+                  placeholder="1704067200"
+                />
+              </div>
+
+              <button className="calc-btn" onClick={calculateDuration}>Calculate Difference</button>
+
+              {duration && (
+                <div className="calc-result">
+                  <div className="duration-summary">
+                    <div className="duration-total">{duration.total.toLocaleString()} seconds</div>
+                    <div className="duration-breakdown">
+                      <div className="duration-part">
+                        <span className="duration-value">{duration.days}</span>
+                        <span className="duration-unit">days</span>
+                      </div>
+                      <div className="duration-part">
+                        <span className="duration-value">{duration.hours}</span>
+                        <span className="duration-unit">hours</span>
+                      </div>
+                      <div className="duration-part">
+                        <span className="duration-value">{duration.minutes}</span>
+                        <span className="duration-unit">min</span>
+                      </div>
+                      <div className="duration-part">
+                        <span className="duration-value">{duration.seconds}</span>
+                        <span className="duration-unit">sec</span>
+                      </div>
+                    </div>
+                    <div className="duration-direction">
+                      {duration.isE1Earlier ? 'First epoch is earlier' : 'Second epoch is earlier'}
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
         </div>
         <AdSpace />
       </div>
@@ -1215,7 +1215,7 @@ const TimezoneWidget = () => {
 
   const getTimeInZone = (zone) => {
     const date = new Date(selectedEpoch * 1000);
-    return date.toLocaleString('en-US', { 
+    return date.toLocaleString('en-US', {
       timeZone: zone,
       weekday: 'short',
       month: 'short',
@@ -1230,58 +1230,60 @@ const TimezoneWidget = () => {
   return (
     <main className="main-content">
       <h1 className="main-title"><FaGlobe size={24} style={{ marginRight: '8px' }} />World Timezone Converter</h1>
-      
+
       <div className="content-with-ad">
         <div className="main-section">
           <div className="feature-description">
             <p>View any epoch timestamp across multiple timezones simultaneously. Perfect for coordinating with global teams or scheduling international meetings. Includes DST indicators and major cities worldwide.</p>
           </div>
-          
+
           <div className="timezone-container">
-        <div className="timezone-input-card">
-          <label>Enter Epoch Timestamp (or use current time)</label>
-          <div className="timezone-input-row">
-            <input 
-              type="text" 
-              value={selectedEpoch}
-              onChange={(e) => setSelectedEpoch(parseInt(e.target.value) || 0)}
-              className="timezone-input"
-            />
-            <button className="timezone-btn" onClick={() => setSelectedEpoch(Math.floor(Date.now() / 1000))}>
-              Use Now
-            </button>
-          </div>
-        </div>
-
-        <div className="timezone-grid">
-          {timezones.map((tz, idx) => (
-            <div key={idx} className="timezone-card">
-              <div className="tz-flag">{tz.flag}</div>
-              <div className="tz-city">{tz.name}</div>
-              <div className="tz-time">{getTimeInZone(tz.zone)}</div>
-              <div className="tz-zone">{tz.zone}</div>
-            </div>
-          ))}
-        </div>
-
-        <div className="timezone-live">
-          <h3>Live World Clocks</h3>
-          <div className="live-clocks">
-            {timezones.slice(0, 4).map((tz, idx) => (
-              <div key={idx} className="live-clock">
-                <div className="clock-city">{tz.flag} {tz.name}</div>
-                <div className="clock-time">
-                  {new Date(currentTime).toLocaleTimeString('en-US', { 
-                    timeZone: tz.zone,
-                    hour: '2-digit',
-                    minute: '2-digit',
-                    second: '2-digit'
-                  })}
-                </div>
+            <div className="timezone-input-card">
+              <label>Enter Epoch Timestamp (or use current time)</label>
+              <div className="timezone-input-row">
+                <input
+                  type="text"
+                  value={selectedEpoch}
+                  onChange={(e) => setSelectedEpoch(parseInt(e.target.value) || 0)}
+                  className="timezone-input"
+                />
+                <button className="timezone-btn" onClick={() => setSelectedEpoch(Math.floor(Date.now() / 1000))}>
+                  Use Now
+                </button>
               </div>
-            ))}
-          </div>
-        </div>
+            </div>
+
+            <div className="timezone-grid-columns">
+              {timezones.map((tz, idx) => (
+                <div key={idx} className="timezone-column-item">
+                  <div className="tz-col-header">
+                    <span className="tz-col-flag">{tz.flag}</span>
+                    <span className="tz-col-city">{tz.name}</span>
+                  </div>
+                  <div className="tz-col-time">{getTimeInZone(tz.zone)}</div>
+                  <div className="tz-col-zone">{tz.zone}</div>
+                </div>
+              ))}
+            </div>
+
+            <div className="timezone-live">
+              <h3>Live Current Time</h3>
+              <div className="live-clocks-list">
+                {timezones.slice(0, 4).map((tz, idx) => (
+                  <div key={idx} className="live-clock-item">
+                    <div className="live-clock-label">{tz.flag} {tz.name}</div>
+                    <div className="live-clock-value">
+                      {new Date(currentTime).toLocaleTimeString('en-US', {
+                        timeZone: tz.zone,
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        second: '2-digit'
+                      })}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
         <AdSpace />
@@ -1297,24 +1299,30 @@ const QuickPresets = () => {
 
   const presets = [
     { name: 'Now', desc: 'Current timestamp', fn: () => Math.floor(Date.now() / 1000) },
-    { name: 'Start of Today', desc: 'Midnight today', fn: () => Math.floor(new Date().setHours(0,0,0,0) / 1000) },
-    { name: 'End of Today', desc: 'Last second of today', fn: () => Math.floor(new Date().setHours(23,59,59,999) / 1000) },
-    { name: 'Start of Week', desc: 'Monday 00:00', fn: () => {
-      const now = new Date();
-      const day = now.getDay();
-      const diff = now.getDate() - day + (day === 0 ? -6 : 1);
-      return Math.floor(new Date(now.setDate(diff)).setHours(0,0,0,0) / 1000);
-    }},
-    { name: 'End of Month', desc: 'Last second of current month', fn: () => {
-      const now = new Date();
-      return Math.floor(new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59).getTime() / 1000);
-    }},
+    { name: 'Start of Today', desc: 'Midnight today', fn: () => Math.floor(new Date().setHours(0, 0, 0, 0) / 1000) },
+    { name: 'End of Today', desc: 'Last second of today', fn: () => Math.floor(new Date().setHours(23, 59, 59, 999) / 1000) },
+    {
+      name: 'Start of Week', desc: 'Monday 00:00', fn: () => {
+        const now = new Date();
+        const day = now.getDay();
+        const diff = now.getDate() - day + (day === 0 ? -6 : 1);
+        return Math.floor(new Date(now.setDate(diff)).setHours(0, 0, 0, 0) / 1000);
+      }
+    },
+    {
+      name: 'End of Month', desc: 'Last second of current month', fn: () => {
+        const now = new Date();
+        return Math.floor(new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59).getTime() / 1000);
+      }
+    },
     { name: 'Start of Year', desc: 'January 1st, 00:00', fn: () => Math.floor(new Date(new Date().getFullYear(), 0, 1).getTime() / 1000) },
-    { name: 'Tomorrow 9 AM', desc: 'Next day at 9:00 AM', fn: () => {
-      const tomorrow = new Date();
-      tomorrow.setDate(tomorrow.getDate() + 1);
-      return Math.floor(tomorrow.setHours(9,0,0,0) / 1000);
-    }},
+    {
+      name: 'Tomorrow 9 AM', desc: 'Next day at 9:00 AM', fn: () => {
+        const tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        return Math.floor(tomorrow.setHours(9, 0, 0, 0) / 1000);
+      }
+    },
     { name: 'One Week from Now', desc: '+7 days', fn: () => Math.floor(Date.now() / 1000) + 604800 },
     { name: 'One Month from Now', desc: '+30 days', fn: () => Math.floor(Date.now() / 1000) + 2592000 },
     { name: 'One Year from Now', desc: '+365 days', fn: () => Math.floor(Date.now() / 1000) + 31536000 },
@@ -1357,17 +1365,17 @@ const QuickPresets = () => {
   return (
     <main className="main-content">
       <h1 className="main-title"><BsLightning size={24} style={{ marginRight: '8px' }} />Quick Presets & Timestamps</h1>
-      
+
       <div className="content-with-ad">
         <div className="main-section">
           <div className="feature-description">
             <p>Access commonly used timestamps instantly with smart presets like "start of today", "end of month", or "one week from now". All values are automatically calculated and updated when you refresh.</p>
           </div>
-          
+
           <div className="presets-container">
             <div className="presets-all-table-header">
               <h3>All Preset Timestamps</h3>
-              <button 
+              <button
                 className={`preset-refresh-icon-btn ${copiedRow === 'refresh' ? 'refreshing' : ''}`}
                 onClick={refreshAllValues}
                 title="Refresh all values"
@@ -1398,7 +1406,7 @@ const QuickPresets = () => {
                       <td className="table-value">{preset.epoch}</td>
                       <td className="table-value table-value-date">{preset.gmt}</td>
                       <td className="table-action">
-                        <button 
+                        <button
                           className={`table-copy-btn ${copiedRow === `${preset.name}-epoch` ? 'copied' : ''}`}
                           onClick={() => copyValue(preset.epoch, `${preset.name}-epoch`)}
                           title="Copy epoch"
@@ -1447,7 +1455,7 @@ const VisualTimeline = () => {
     const yearStart = new Date(selectedYear, 0, 1);
     const yearEnd = new Date(selectedYear, 11, 31);
     const days = [];
-    
+
     // Create array of all days in the year
     for (let d = new Date(yearStart); d <= yearEnd; d.setDate(d.getDate() + 1)) {
       const dayEpoch = Math.floor(d.getTime() / 1000);
@@ -1455,9 +1463,9 @@ const VisualTimeline = () => {
         const eventDate = new Date(e.epoch * 1000);
         return eventDate.toDateString() === d.toDateString();
       });
-      
+
       const intensity = dayEvents.length > 0 ? Math.min(dayEvents.reduce((sum, e) => sum + (e.intensity || 1), 0), 4) : 0;
-      
+
       days.push({
         date: new Date(d),
         epoch: dayEpoch,
@@ -1466,17 +1474,17 @@ const VisualTimeline = () => {
         events: dayEvents
       });
     }
-    
+
     // Organize into weeks
     const weeks = [];
     let currentWeek = [];
-    
+
     // Pad the beginning to start on Sunday
     const firstDayOfWeek = days[0].date.getDay();
     for (let i = 0; i < firstDayOfWeek; i++) {
       currentWeek.push(null);
     }
-    
+
     days.forEach(day => {
       currentWeek.push(day);
       if (currentWeek.length === 7) {
@@ -1484,7 +1492,7 @@ const VisualTimeline = () => {
         currentWeek = [];
       }
     });
-    
+
     // Pad the end
     if (currentWeek.length > 0) {
       while (currentWeek.length < 7) {
@@ -1492,7 +1500,7 @@ const VisualTimeline = () => {
       }
       weeks.push(currentWeek);
     }
-    
+
     return weeks;
   };
 
@@ -1516,30 +1524,30 @@ const VisualTimeline = () => {
   return (
     <main className="main-content">
       <h1 className="main-title"><MdTimeline size={24} style={{ marginRight: '8px' }} />Activity Timeline</h1>
-      
+
       <div className="content-with-ad">
         <div className="main-section">
           <div className="feature-description">
             <p>Track your events and activities throughout the year with a GitHub-style contribution graph. Add events with epoch timestamps and visualize your activity patterns over time.</p>
           </div>
-          
+
           <div className="timeline-container">
             <div className="timeline-controls">
-              <input 
-                type="text" 
+              <input
+                type="text"
                 placeholder="Epoch timestamp"
                 value={newEpoch}
                 onChange={(e) => setNewEpoch(e.target.value)}
                 className="timeline-input"
               />
-              <input 
-                type="text" 
+              <input
+                type="text"
                 placeholder="Event label"
                 value={newLabel}
                 onChange={(e) => setNewLabel(e.target.value)}
                 className="timeline-input"
               />
-              <select 
+              <select
                 className="timeline-year-select"
                 value={selectedYear}
                 onChange={(e) => setSelectedYear(parseInt(e.target.value))}
@@ -1558,7 +1566,7 @@ const VisualTimeline = () => {
                 <div className="contribution-legend">
                   <span>Less</span>
                   {[0, 1, 2, 3, 4].map(level => (
-                    <div 
+                    <div
                       key={level}
                       className="legend-box"
                       style={{ backgroundColor: getIntensityColor(level) }}
@@ -1694,18 +1702,18 @@ const RecurringDates = () => {
   return (
     <main className="main-content">
       <h1 className="main-title"><FiRepeat size={24} style={{ marginRight: '8px' }} />Recurring Date Generator</h1>
-      
+
       <div className="content-with-ad">
         <div className="main-section recurring-main-section">
           <div className="recurring-description">
             <p>Generate sequences of recurring dates from a starting epoch timestamp. Specify daily, weekly, monthly, or yearly intervals and get epoch timestamps for each occurrence. Useful for scheduling and automation.</p>
           </div>
-          
+
           <div className="recurring-layout">
             <div className="recurring-controls-panel">
               <div className="recurring-input-group">
                 <label>Start Epoch</label>
-                <input 
+                <input
                   type="text"
                   value={startEpoch}
                   onChange={(e) => setStartEpoch(e.target.value)}
@@ -1726,7 +1734,7 @@ const RecurringDates = () => {
 
               <div className="recurring-input-group">
                 <label>Number of Occurrences</label>
-                <input 
+                <input
                   type="number"
                   value={occurrences}
                   onChange={(e) => setOccurrences(parseInt(e.target.value) || 1)}
@@ -1743,7 +1751,7 @@ const RecurringDates = () => {
               <div className="recurring-results-header">
                 <h3>Generated Dates ({results.length})</h3>
               </div>
-              
+
               <div className="recurring-table-container">
                 <table className="recurring-table">
                   <thead>
@@ -1772,8 +1780,8 @@ const RecurringDates = () => {
                           <td data-label="Epoch" className="recurring-epoch-cell">{result.epoch}</td>
                           <td data-label="Date & Time (GMT)" className="recurring-date-cell">{result.date.gmt}</td>
                           <td data-label="Action" className="recurring-action-cell">
-                            <button 
-                              className="recurring-copy-btn" 
+                            <button
+                              className="recurring-copy-btn"
                               onClick={() => navigator.clipboard.writeText(result.epoch)}
                               title="Copy epoch"
                             >
@@ -1826,77 +1834,77 @@ const ComparisonTool = () => {
   return (
     <main className="main-content">
       <h1 className="main-title"><MdCompare size={24} style={{ marginRight: '8px' }} />Epoch Comparison Tool</h1>
-      
+
       <div className="content-with-ad">
         <div className="main-section">
           <div className="feature-description">
             <p>Compare two epoch timestamps side-by-side to see their dates and calculate the time difference between them. Includes validation checks for the Year 2038 problem and detailed duration breakdown.</p>
           </div>
-          
+
           <div className="comparison-container">
-        <div className="comparison-inputs">
-          <div className="comparison-input-group">
-            <label>First Epoch</label>
-            <input 
-              type="text"
-              value={epoch1}
-              onChange={(e) => setEpoch1(e.target.value)}
-              className="comparison-input"
-              placeholder="1672531200"
-            />
-          </div>
-
-          <div className="comparison-vs">VS</div>
-
-          <div className="comparison-input-group">
-            <label>Second Epoch</label>
-            <input 
-              type="text"
-              value={epoch2}
-              onChange={(e) => setEpoch2(e.target.value)}
-              className="comparison-input"
-              placeholder="1704067200"
-            />
-          </div>
-        </div>
-
-        <button className="comparison-btn" onClick={compareEpochs}>Compare</button>
-
-        {comparison && (
-          <div className="comparison-results">
-            <div className="comparison-grid">
-              <div className="comparison-card">
-                <h3>First Epoch</h3>
-                <div className="comparison-value">{comparison.epoch1}</div>
-                <div className="comparison-date">{comparison.date1.gmt}</div>
-                <div className={`comparison-validity ${comparison.isValid1 ? 'valid' : 'invalid'}`}>
-                  {comparison.isValid1 ? '✓ Valid' : '✗ Invalid (Year 2038 problem)'}
-                </div>
+            <div className="comparison-inputs">
+              <div className="comparison-input-group">
+                <label>First Epoch</label>
+                <input
+                  type="text"
+                  value={epoch1}
+                  onChange={(e) => setEpoch1(e.target.value)}
+                  className="comparison-input"
+                  placeholder="1672531200"
+                />
               </div>
 
-              <div className="comparison-card">
-                <h3>Second Epoch</h3>
-                <div className="comparison-value">{comparison.epoch2}</div>
-                <div className="comparison-date">{comparison.date2.gmt}</div>
-                <div className={`comparison-validity ${comparison.isValid2 ? 'valid' : 'invalid'}`}>
-                  {comparison.isValid2 ? '✓ Valid' : '✗ Invalid (Year 2038 problem)'}
-                </div>
+              <div className="comparison-vs">VS</div>
+
+              <div className="comparison-input-group">
+                <label>Second Epoch</label>
+                <input
+                  type="text"
+                  value={epoch2}
+                  onChange={(e) => setEpoch2(e.target.value)}
+                  className="comparison-input"
+                  placeholder="1704067200"
+                />
               </div>
             </div>
 
-            <div className="comparison-summary">
-              <h3>Comparison Summary</h3>
-              <div className="summary-item">
-                <span className="summary-label">Earlier Timestamp:</span>
-                <span className="summary-value">{comparison.earlier} epoch</span>
+            <button className="comparison-btn" onClick={compareEpochs}>Compare</button>
+
+            {comparison && (
+              <div className="comparison-results">
+                <div className="comparison-grid">
+                  <div className="comparison-card">
+                    <h3>First Epoch</h3>
+                    <div className="comparison-value">{comparison.epoch1}</div>
+                    <div className="comparison-date">{comparison.date1.gmt}</div>
+                    <div className={`comparison-validity ${comparison.isValid1 ? 'valid' : 'invalid'}`}>
+                      {comparison.isValid1 ? '✓ Valid' : '✗ Invalid (Year 2038 problem)'}
+                    </div>
+                  </div>
+
+                  <div className="comparison-card">
+                    <h3>Second Epoch</h3>
+                    <div className="comparison-value">{comparison.epoch2}</div>
+                    <div className="comparison-date">{comparison.date2.gmt}</div>
+                    <div className={`comparison-validity ${comparison.isValid2 ? 'valid' : 'invalid'}`}>
+                      {comparison.isValid2 ? '✓ Valid' : '✗ Invalid (Year 2038 problem)'}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="comparison-summary">
+                  <h3>Comparison Summary</h3>
+                  <div className="summary-item">
+                    <span className="summary-label">Earlier Timestamp:</span>
+                    <span className="summary-value">{comparison.earlier} epoch</span>
+                  </div>
+                  <div className="summary-item">
+                    <span className="summary-label">Time Difference:</span>
+                    <span className="summary-value">{comparison.difference.toLocaleString()} seconds ({comparison.days} days)</span>
+                  </div>
+                </div>
               </div>
-              <div className="summary-item">
-                <span className="summary-label">Time Difference:</span>
-                <span className="summary-value">{comparison.difference.toLocaleString()} seconds ({comparison.days} days)</span>
-              </div>
-            </div>
-          </div>
-        )}
+            )}
           </div>
         </div>
         <AdSpace />
@@ -1914,7 +1922,7 @@ const SmartParser = () => {
     // Extract epoch timestamps (10 or 13 digits)
     const epochPattern = /\b(\d{10}|\d{13})\b/g;
     const matches = inputText.match(epochPattern) || [];
-    
+
     const parsed = matches.map(match => {
       const epoch = match.length === 13 ? parseInt(match) / 1000 : parseInt(match);
       const date = new Date(epoch * 1000);
@@ -1933,45 +1941,45 @@ const SmartParser = () => {
   return (
     <main className="main-content">
       <h1 className="main-title"><FaMagic size={24} style={{ marginRight: '8px' }} />Smart Date Parser</h1>
-      
+
       <div className="content-with-ad">
         <div className="main-section">
           <div className="feature-description">
             <p>Automatically extract and convert epoch timestamps from any text. Paste logs, documents, or data containing timestamps and instantly see them converted to readable dates. Supports both seconds and milliseconds.</p>
           </div>
-          
-          <div className="parser-container">
-        <div className="parser-input-section">
-          <label>Paste text with timestamps (supports epoch seconds/milliseconds)</label>
-          <textarea 
-            className="parser-textarea"
-            value={inputText}
-            onChange={(e) => setInputText(e.target.value)}
-            placeholder="Paste your log files or any text containing epoch timestamps...&#10;Example: Error occurred at 1672531200 and resolved at 1672617600"
-            rows="10"
-          />
-          <button className="parser-btn" onClick={parseText}>Parse & Extract Timestamps</button>
-        </div>
 
-        <div className="parser-results">
-          <h3>Found {parsedDates.length} timestamp(s)</h3>
-          {parsedDates.map((item, idx) => (
-            <div key={idx} className={`parser-item ${!item.isValid ? 'invalid' : ''}`}>
-              <div className="parser-original">Original: {item.original} ({item.type})</div>
-              <div className="parser-epoch">Epoch: {item.epoch}</div>
-              {item.isValid && (
-                <>
-                  <div className="parser-date">GMT: {item.date.gmt}</div>
-                  <div className="parser-local">Local: {item.date.local}</div>
-                </>
-              )}
-              {!item.isValid && <div className="parser-error">Invalid timestamp</div>}
-              <button className="parser-copy" onClick={() => navigator.clipboard.writeText(item.epoch)}>
-                <FiCopy size={16} />
-              </button>
+          <div className="parser-container">
+            <div className="parser-input-section">
+              <label>Paste text with timestamps (supports epoch seconds/milliseconds)</label>
+              <textarea
+                className="parser-textarea"
+                value={inputText}
+                onChange={(e) => setInputText(e.target.value)}
+                placeholder="Paste your log files or any text containing epoch timestamps...&#10;Example: Error occurred at 1672531200 and resolved at 1672617600"
+                rows="10"
+              />
+              <button className="parser-btn" onClick={parseText}>Parse & Extract Timestamps</button>
             </div>
-          ))}
-        </div>
+
+            <div className="parser-results">
+              <h3>Found {parsedDates.length} timestamp(s)</h3>
+              {parsedDates.map((item, idx) => (
+                <div key={idx} className={`parser-item ${!item.isValid ? 'invalid' : ''}`}>
+                  <div className="parser-original">Original: {item.original} ({item.type})</div>
+                  <div className="parser-epoch">Epoch: {item.epoch}</div>
+                  {item.isValid && (
+                    <>
+                      <div className="parser-date">GMT: {item.date.gmt}</div>
+                      <div className="parser-local">Local: {item.date.local}</div>
+                    </>
+                  )}
+                  {!item.isValid && <div className="parser-error">Invalid timestamp</div>}
+                  <button className="parser-copy" onClick={() => navigator.clipboard.writeText(item.epoch)}>
+                    <FiCopy size={16} />
+                  </button>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
         <AdSpace />
@@ -1994,7 +2002,7 @@ const UUIDGenerator = () => {
       let uuid = '';
       if (version === 'v4') {
         // UUID v4 (random)
-        uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
           const r = Math.random() * 16 | 0;
           const v = c === 'x' ? r : (r & 0x3 | 0x8);
           return v.toString(16);
@@ -2008,7 +2016,7 @@ const UUIDGenerator = () => {
         // Nil UUID
         uuid = '00000000-0000-0000-0000-000000000000';
       }
-      
+
       if (!withHyphens) {
         uuid = uuid.replace(/-/g, '');
       }
@@ -2027,94 +2035,94 @@ const UUIDGenerator = () => {
   return (
     <main className="main-content">
       <h1 className="main-title"><FaHashtag size={24} style={{ marginRight: '8px' }} />UUID/GUID Generator</h1>
-      
+
       <div className="content-with-ad">
         <div className="main-section">
           <div className="feature-description">
             <p>Generate unique identifiers (UUIDs/GUIDs) in various formats. Choose between random UUIDs (v4), timestamp-based (v1), or nil UUIDs. Perfect for database keys, session IDs, and unique identifiers in your applications.</p>
           </div>
-          
-          <div className="uuid-container">
-        <div className="uuid-controls">
-          <div className="uuid-options">
-            <div className="uuid-option-group">
-              <label>Version</label>
-              <select className="uuid-select" value={version} onChange={(e) => setVersion(e.target.value)}>
-                <option value="v4">Version 4 (Random)</option>
-                <option value="v1">Version 1 (Timestamp)</option>
-                <option value="nil">Nil UUID</option>
-              </select>
-            </div>
-            
-            <div className="uuid-option-group">
-              <label>Count</label>
-              <input 
-                type="number" 
-                className="uuid-input" 
-                value={count} 
-                onChange={(e) => setCount(Math.max(1, Math.min(100, parseInt(e.target.value) || 1)))}
-                min="1"
-                max="100"
-              />
-            </div>
-            
-            <div className="uuid-checkboxes">
-              <label className="uuid-checkbox">
-                <input type="checkbox" checked={uppercase} onChange={(e) => setUppercase(e.target.checked)} />
-                Uppercase
-              </label>
-              <label className="uuid-checkbox">
-                <input type="checkbox" checked={withHyphens} onChange={(e) => setWithHyphens(e.target.checked)} />
-                With Hyphens
-              </label>
-            </div>
-          </div>
-          
-          <button className="uuid-btn" onClick={generateUUID}>
-            <FaHashtag size={16} /> Generate UUID
-          </button>
-        </div>
 
-        {uuids.length > 0 && (
-          <div className="uuid-results">
-            <div className="uuid-header">
-              <h3>Generated UUIDs ({uuids.length})</h3>
-              <button className="uuid-copy-all" onClick={copyAll}>
-                <FiCopy size={16} /> Copy All
+          <div className="uuid-container">
+            <div className="uuid-controls">
+              <div className="uuid-options">
+                <div className="uuid-option-group">
+                  <label>Version</label>
+                  <select className="uuid-select" value={version} onChange={(e) => setVersion(e.target.value)}>
+                    <option value="v4">Version 4 (Random)</option>
+                    <option value="v1">Version 1 (Timestamp)</option>
+                    <option value="nil">Nil UUID</option>
+                  </select>
+                </div>
+
+                <div className="uuid-option-group">
+                  <label>Count</label>
+                  <input
+                    type="number"
+                    className="uuid-input"
+                    value={count}
+                    onChange={(e) => setCount(Math.max(1, Math.min(100, parseInt(e.target.value) || 1)))}
+                    min="1"
+                    max="100"
+                  />
+                </div>
+
+                <div className="uuid-checkboxes">
+                  <label className="uuid-checkbox">
+                    <input type="checkbox" checked={uppercase} onChange={(e) => setUppercase(e.target.checked)} />
+                    Uppercase
+                  </label>
+                  <label className="uuid-checkbox">
+                    <input type="checkbox" checked={withHyphens} onChange={(e) => setWithHyphens(e.target.checked)} />
+                    With Hyphens
+                  </label>
+                </div>
+              </div>
+
+              <button className="uuid-btn" onClick={generateUUID}>
+                <FaHashtag size={16} /> Generate UUID
               </button>
             </div>
-            
-            <div className="uuid-list">
-              {uuids.map((uuid, index) => (
-                <div key={index} className="uuid-item">
-                  <span className="uuid-number">#{index + 1}</span>
-                  <code className="uuid-value">{uuid}</code>
-                  <button className="uuid-copy-btn" onClick={() => navigator.clipboard.writeText(uuid)}>
-                    <FiCopy size={14} />
+
+            {uuids.length > 0 && (
+              <div className="uuid-results">
+                <div className="uuid-header">
+                  <h3>Generated UUIDs ({uuids.length})</h3>
+                  <button className="uuid-copy-all" onClick={copyAll}>
+                    <FiCopy size={16} /> Copy All
                   </button>
                 </div>
-              ))}
-            </div>
-          </div>
-        )}
 
-        <div className="uuid-info">
-          <h3>UUID Information</h3>
-          <div className="info-grid">
-            <div className="info-card">
-              <h4>UUID v4 (Random)</h4>
-              <p>Randomly generated using cryptographic RNG. Most commonly used. 122 bits of randomness.</p>
+                <div className="uuid-list">
+                  {uuids.map((uuid, index) => (
+                    <div key={index} className="uuid-item">
+                      <span className="uuid-number">#{index + 1}</span>
+                      <code className="uuid-value">{uuid}</code>
+                      <button className="uuid-copy-btn" onClick={() => navigator.clipboard.writeText(uuid)}>
+                        <FiCopy size={14} />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            <div className="uuid-info">
+              <h3>UUID Information</h3>
+              <div className="info-grid">
+                <div className="info-card">
+                  <h4>UUID v4 (Random)</h4>
+                  <p>Randomly generated using cryptographic RNG. Most commonly used. 122 bits of randomness.</p>
+                </div>
+                <div className="info-card">
+                  <h4>UUID v1 (Timestamp)</h4>
+                  <p>Based on timestamp and MAC address. Sortable by creation time. Contains temporal information.</p>
+                </div>
+                <div className="info-card">
+                  <h4>Format</h4>
+                  <p>Standard: 8-4-4-4-12 hexadecimal digits. Total 128 bits. Example: 550e8400-e29b-41d4-a716-446655440000</p>
+                </div>
+              </div>
             </div>
-            <div className="info-card">
-              <h4>UUID v1 (Timestamp)</h4>
-              <p>Based on timestamp and MAC address. Sortable by creation time. Contains temporal information.</p>
-            </div>
-            <div className="info-card">
-              <h4>Format</h4>
-              <p>Standard: 8-4-4-4-12 hexadecimal digits. Total 128 bits. Example: 550e8400-e29b-41d4-a716-446655440000</p>
-            </div>
-          </div>
-        </div>
           </div>
         </div>
         <AdSpace />
@@ -2152,84 +2160,86 @@ const TextCounter = () => {
   return (
     <main className="main-content">
       <h1 className="main-title"><AiOutlineFileText size={24} style={{ marginRight: '8px' }} />Character & Word Counter</h1>
-      
+
       <div className="content-with-ad">
         <div className="main-section">
           <div className="feature-description">
             <p>Count characters, words, lines, paragraphs, and more in real-time. Get reading and speaking time estimates, analyze sentence structure, and find the most used words. Ideal for writers, students, and content creators.</p>
           </div>
-          
+
           <div className="counter-container">
-        <div className="counter-input-section">
-          <div className="counter-header">
-            <label>Enter or paste your text</label>
-            <div className="counter-actions">
-              <button className="counter-btn-small" onClick={handleClear}>Clear</button>
-              <button className="counter-btn-small" onClick={handleCopySummary}>
-                <FiCopy size={14} /> Copy Stats
-              </button>
-            </div>
-          </div>
-          <textarea 
-            className="counter-textarea"
-            value={text}
-            onChange={(e) => setText(e.target.value)}
-            placeholder="Start typing or paste your text here..."
-            rows={15}
-          />
-        </div>
+            <div className="counter-main-layout">
+              <div className="counter-input-section">
+                <div className="counter-header">
+                  <label>Enter or paste your text</label>
+                  <div className="counter-actions">
+                    <button className="counter-btn-small" onClick={handleClear}>Clear</button>
+                    <button className="counter-btn-small" onClick={handleCopySummary}>
+                      <FiCopy size={14} /> Copy Stats
+                    </button>
+                  </div>
+                </div>
+                <textarea
+                  className="counter-textarea"
+                  value={text}
+                  onChange={(e) => setText(e.target.value)}
+                  placeholder="Start typing or paste your text here..."
+                  rows={15}
+                />
+              </div>
 
-        <div className="counter-stats">
-          <div className="stats-grid">
-            <div className="stat-box primary">
-              <div className="stat-value">{stats.characters}</div>
-              <div className="stat-label">Characters</div>
+              <div className="counter-stats">
+                <div className="stats-grid">
+                  <div className="stat-box primary">
+                    <div className="stat-value">{stats.characters}</div>
+                    <div className="stat-label">Characters</div>
+                  </div>
+                  <div className="stat-box primary">
+                    <div className="stat-value">{stats.charactersNoSpaces}</div>
+                    <div className="stat-label">Characters (no spaces)</div>
+                  </div>
+                  <div className="stat-box primary">
+                    <div className="stat-value">{stats.words}</div>
+                    <div className="stat-label">Words</div>
+                  </div>
+                  <div className="stat-box">
+                    <div className="stat-value">{stats.lines}</div>
+                    <div className="stat-label">Lines</div>
+                  </div>
+                  <div className="stat-box">
+                    <div className="stat-value">{stats.paragraphs}</div>
+                    <div className="stat-label">Paragraphs</div>
+                  </div>
+                  <div className="stat-box">
+                    <div className="stat-value">{stats.sentences}</div>
+                    <div className="stat-label">Sentences</div>
+                  </div>
+                  <div className="stat-box">
+                    <div className="stat-value">{stats.averageWordLength}</div>
+                    <div className="stat-label">Avg Word Length</div>
+                  </div>
+                  <div className="stat-box">
+                    <div className="stat-value">{stats.readingTime} min</div>
+                    <div className="stat-label">Reading Time</div>
+                  </div>
+                  <div className="stat-box">
+                    <div className="stat-value">{stats.speakingTime} min</div>
+                    <div className="stat-label">Speaking Time</div>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div className="stat-box primary">
-              <div className="stat-value">{stats.charactersNoSpaces}</div>
-              <div className="stat-label">Characters (no spaces)</div>
-            </div>
-            <div className="stat-box primary">
-              <div className="stat-value">{stats.words}</div>
-              <div className="stat-label">Words</div>
-            </div>
-            <div className="stat-box">
-              <div className="stat-value">{stats.lines}</div>
-              <div className="stat-label">Lines</div>
-            </div>
-            <div className="stat-box">
-              <div className="stat-value">{stats.paragraphs}</div>
-              <div className="stat-label">Paragraphs</div>
-            </div>
-            <div className="stat-box">
-              <div className="stat-value">{stats.sentences}</div>
-              <div className="stat-label">Sentences</div>
-            </div>
-            <div className="stat-box">
-              <div className="stat-value">{stats.averageWordLength}</div>
-              <div className="stat-label">Avg Word Length</div>
-            </div>
-            <div className="stat-box">
-              <div className="stat-value">{stats.readingTime} min</div>
-              <div className="stat-label">Reading Time</div>
-            </div>
-            <div className="stat-box">
-              <div className="stat-value">{stats.speakingTime} min</div>
-              <div className="stat-label">Speaking Time</div>
-            </div>
-          </div>
-        </div>
 
-        <div className="counter-info">
-          <h3>Text Analysis Features</h3>
-          <ul>
-            <li><strong>Real-time counting:</strong> All statistics update as you type</li>
-            <li><strong>Reading time:</strong> Based on average reading speed of 200 words/minute</li>
-            <li><strong>Speaking time:</strong> Based on average speaking speed of 150 words/minute</li>
-            <li><strong>Paragraphs:</strong> Separated by double line breaks</li>
-            <li><strong>Sentences:</strong> Detected by punctuation marks (. ! ?)</li>
-          </ul>
-        </div>
+            <div className="counter-info">
+              <h3>Text Analysis Features</h3>
+              <ul>
+                <li><strong>Real-time counting:</strong> All statistics update as you type</li>
+                <li><strong>Reading time:</strong> Based on average reading speed of 200 words/minute</li>
+                <li><strong>Speaking time:</strong> Based on average speaking speed of 150 words/minute</li>
+                <li><strong>Paragraphs:</strong> Separated by double line breaks</li>
+                <li><strong>Sentences:</strong> Detected by punctuation marks (. ! ?)</li>
+              </ul>
+            </div>
           </div>
         </div>
         <AdSpace />
@@ -2287,7 +2297,7 @@ const ColorConverter = () => {
     let m = 1 - (g / 255);
     let y = 1 - (b / 255);
     let k = Math.min(c, m, y);
-    
+
     c = ((c - k) / (1 - k)) || 0;
     m = ((m - k) / (1 - k)) || 0;
     y = ((y - k) / (1 - k)) || 0;
@@ -2302,7 +2312,7 @@ const ColorConverter = () => {
 
   const convertColor = (color) => {
     let hex = color;
-    
+
     // Handle different input formats
     if (color.startsWith('rgb')) {
       const matches = color.match(/\d+/g);
@@ -2322,8 +2332,8 @@ const ColorConverter = () => {
 
     setColorFormats({
       hex: hex.toUpperCase(),
-      hexShort: hex.length === 7 && hex[1] === hex[2] && hex[3] === hex[4] && hex[5] === hex[6] 
-        ? `#${hex[1]}${hex[3]}${hex[5]}`.toUpperCase() 
+      hexShort: hex.length === 7 && hex[1] === hex[2] && hex[3] === hex[4] && hex[5] === hex[6]
+        ? `#${hex[1]}${hex[3]}${hex[5]}`.toUpperCase()
         : '',
       rgb: `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`,
       rgba: `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 1)`,
@@ -2350,201 +2360,201 @@ const ColorConverter = () => {
   return (
     <main className="main-content">
       <h1 className="main-title"><FaPalette size={24} style={{ marginRight: '8px' }} />Color Converter</h1>
-      
+
       <div className="content-with-ad">
         <div className="main-section">
           <div className="feature-description">
             <p>Convert colors between different formats including HEX, RGB, RGBA, HSL, HSLA, CMYK, and decimal values. Pick colors visually or enter values manually. Perfect for designers and developers working with color codes.</p>
           </div>
-          
+
           <div className="color-container">
-        <div className="color-picker-section">
-          <div className="color-preview" style={{ backgroundColor: inputColor }}>
-            <div className="color-overlay">
-              <input 
-                type="color" 
-                className="color-input-picker"
-                value={inputColor}
-                onChange={handleColorChange}
-              />
-              <span className="color-preview-text">Click to pick color</span>
-            </div>
-          </div>
-          
-          <div className="color-input-group">
-            <label>Enter color value</label>
-            <input 
-              type="text" 
-              className="color-text-input"
-              value={inputColor}
-              onChange={handleColorChange}
-              placeholder="Enter hex, rgb, or hsl"
-            />
-          </div>
-        </div>
-
-        {colorFormats.hex && (
-          <div className="color-formats">
-            <div className="format-section">
-              <h3>Standard Formats</h3>
-              <div className="format-list">
-                <div className="format-item">
-                  <div className="format-details">
-                    <span className="format-label">HEX</span>
-                    <code className="format-value">{colorFormats.hex}</code>
-                  </div>
-                  <button className="format-copy" onClick={() => copyFormat(colorFormats.hex)}>
-                    <FiCopy size={14} />
-                  </button>
+            <div className="color-picker-section">
+              <div className="color-preview" style={{ backgroundColor: inputColor }}>
+                <div className="color-overlay">
+                  <input
+                    type="color"
+                    className="color-input-picker"
+                    value={inputColor}
+                    onChange={handleColorChange}
+                  />
+                  <span className="color-preview-text">Click to pick color</span>
                 </div>
+              </div>
 
-                {colorFormats.hexShort && (
-                  <div className="format-item">
-                    <div className="format-details">
-                      <span className="format-label">HEX (Short)</span>
-                      <code className="format-value">{colorFormats.hexShort}</code>
-                    </div>
-                    <button className="format-copy" onClick={() => copyFormat(colorFormats.hexShort)}>
-                      <FiCopy size={14} />
-                    </button>
-                  </div>
-                )}
-
-                <div className="format-item">
-                  <div className="format-details">
-                    <span className="format-label">RGB</span>
-                    <code className="format-value">{colorFormats.rgb}</code>
-                  </div>
-                  <button className="format-copy" onClick={() => copyFormat(colorFormats.rgb)}>
-                    <FiCopy size={14} />
-                  </button>
-                </div>
-
-                <div className="format-item">
-                  <div className="format-details">
-                    <span className="format-label">RGBA</span>
-                    <code className="format-value">{colorFormats.rgba}</code>
-                  </div>
-                  <button className="format-copy" onClick={() => copyFormat(colorFormats.rgba)}>
-                    <FiCopy size={14} />
-                  </button>
-                </div>
-
-                <div className="format-item">
-                  <div className="format-details">
-                    <span className="format-label">HSL</span>
-                    <code className="format-value">{colorFormats.hsl}</code>
-                  </div>
-                  <button className="format-copy" onClick={() => copyFormat(colorFormats.hsl)}>
-                    <FiCopy size={14} />
-                  </button>
-                </div>
-
-                <div className="format-item">
-                  <div className="format-details">
-                    <span className="format-label">HSLA</span>
-                    <code className="format-value">{colorFormats.hsla}</code>
-                  </div>
-                  <button className="format-copy" onClick={() => copyFormat(colorFormats.hsla)}>
-                    <FiCopy size={14} />
-                  </button>
-                </div>
-
-                <div className="format-item">
-                  <div className="format-details">
-                    <span className="format-label">CMYK</span>
-                    <code className="format-value">{colorFormats.cmyk}</code>
-                  </div>
-                  <button className="format-copy" onClick={() => copyFormat(colorFormats.cmyk)}>
-                    <FiCopy size={14} />
-                  </button>
-                </div>
-
-                <div className="format-item">
-                  <div className="format-details">
-                    <span className="format-label">Decimal</span>
-                    <code className="format-value">{colorFormats.decimal}</code>
-                  </div>
-                  <button className="format-copy" onClick={() => copyFormat(colorFormats.decimal.toString())}>
-                    <FiCopy size={14} />
-                  </button>
-                </div>
+              <div className="color-input-group">
+                <label>Enter color value</label>
+                <input
+                  type="text"
+                  className="color-text-input"
+                  value={inputColor}
+                  onChange={handleColorChange}
+                  placeholder="Enter hex, rgb, or hsl"
+                />
               </div>
             </div>
 
-            <div className="format-section">
-              <h3>Color Values</h3>
-              <div className="color-values-grid">
-                <div className="value-card">
-                  <h4>RGB Components</h4>
-                  <div className="component-bars">
-                    <div className="component-bar">
-                      <span className="component-label">R</span>
-                      <div className="component-progress">
-                        <div className="component-fill" style={{ width: `${(colorFormats.rgbObj.r / 255) * 100}%`, backgroundColor: '#ef4444' }}></div>
+            {colorFormats.hex && (
+              <div className="color-formats">
+                <div className="format-section">
+                  <h3>Standard Formats</h3>
+                  <div className="format-list">
+                    <div className="format-item">
+                      <div className="format-details">
+                        <span className="format-label">HEX</span>
+                        <code className="format-value">{colorFormats.hex}</code>
                       </div>
-                      <span className="component-value">{colorFormats.rgbObj.r}</span>
+                      <button className="format-copy" onClick={() => copyFormat(colorFormats.hex)}>
+                        <FiCopy size={14} />
+                      </button>
                     </div>
-                    <div className="component-bar">
-                      <span className="component-label">G</span>
-                      <div className="component-progress">
-                        <div className="component-fill" style={{ width: `${(colorFormats.rgbObj.g / 255) * 100}%`, backgroundColor: '#22c55e' }}></div>
+
+                    {colorFormats.hexShort && (
+                      <div className="format-item">
+                        <div className="format-details">
+                          <span className="format-label">HEX (Short)</span>
+                          <code className="format-value">{colorFormats.hexShort}</code>
+                        </div>
+                        <button className="format-copy" onClick={() => copyFormat(colorFormats.hexShort)}>
+                          <FiCopy size={14} />
+                        </button>
                       </div>
-                      <span className="component-value">{colorFormats.rgbObj.g}</span>
+                    )}
+
+                    <div className="format-item">
+                      <div className="format-details">
+                        <span className="format-label">RGB</span>
+                        <code className="format-value">{colorFormats.rgb}</code>
+                      </div>
+                      <button className="format-copy" onClick={() => copyFormat(colorFormats.rgb)}>
+                        <FiCopy size={14} />
+                      </button>
                     </div>
-                    <div className="component-bar">
-                      <span className="component-label">B</span>
-                      <div className="component-progress">
-                        <div className="component-fill" style={{ width: `${(colorFormats.rgbObj.b / 255) * 100}%`, backgroundColor: '#3b82f6' }}></div>
+
+                    <div className="format-item">
+                      <div className="format-details">
+                        <span className="format-label">RGBA</span>
+                        <code className="format-value">{colorFormats.rgba}</code>
                       </div>
-                      <span className="component-value">{colorFormats.rgbObj.b}</span>
+                      <button className="format-copy" onClick={() => copyFormat(colorFormats.rgba)}>
+                        <FiCopy size={14} />
+                      </button>
+                    </div>
+
+                    <div className="format-item">
+                      <div className="format-details">
+                        <span className="format-label">HSL</span>
+                        <code className="format-value">{colorFormats.hsl}</code>
+                      </div>
+                      <button className="format-copy" onClick={() => copyFormat(colorFormats.hsl)}>
+                        <FiCopy size={14} />
+                      </button>
+                    </div>
+
+                    <div className="format-item">
+                      <div className="format-details">
+                        <span className="format-label">HSLA</span>
+                        <code className="format-value">{colorFormats.hsla}</code>
+                      </div>
+                      <button className="format-copy" onClick={() => copyFormat(colorFormats.hsla)}>
+                        <FiCopy size={14} />
+                      </button>
+                    </div>
+
+                    <div className="format-item">
+                      <div className="format-details">
+                        <span className="format-label">CMYK</span>
+                        <code className="format-value">{colorFormats.cmyk}</code>
+                      </div>
+                      <button className="format-copy" onClick={() => copyFormat(colorFormats.cmyk)}>
+                        <FiCopy size={14} />
+                      </button>
+                    </div>
+
+                    <div className="format-item">
+                      <div className="format-details">
+                        <span className="format-label">Decimal</span>
+                        <code className="format-value">{colorFormats.decimal}</code>
+                      </div>
+                      <button className="format-copy" onClick={() => copyFormat(colorFormats.decimal.toString())}>
+                        <FiCopy size={14} />
+                      </button>
                     </div>
                   </div>
                 </div>
 
-                <div className="value-card">
-                  <h4>HSL Components</h4>
-                  <div className="component-list">
-                    <div className="component-item">
-                      <span className="component-name">Hue</span>
-                      <span className="component-num">{colorFormats.hslObj.h}°</span>
+                <div className="format-section">
+                  <h3>Color Values</h3>
+                  <div className="color-values-grid">
+                    <div className="value-card">
+                      <h4>RGB Components</h4>
+                      <div className="component-bars">
+                        <div className="component-bar">
+                          <span className="component-label">R</span>
+                          <div className="component-progress">
+                            <div className="component-fill" style={{ width: `${(colorFormats.rgbObj.r / 255) * 100}%`, backgroundColor: '#ef4444' }}></div>
+                          </div>
+                          <span className="component-value">{colorFormats.rgbObj.r}</span>
+                        </div>
+                        <div className="component-bar">
+                          <span className="component-label">G</span>
+                          <div className="component-progress">
+                            <div className="component-fill" style={{ width: `${(colorFormats.rgbObj.g / 255) * 100}%`, backgroundColor: '#22c55e' }}></div>
+                          </div>
+                          <span className="component-value">{colorFormats.rgbObj.g}</span>
+                        </div>
+                        <div className="component-bar">
+                          <span className="component-label">B</span>
+                          <div className="component-progress">
+                            <div className="component-fill" style={{ width: `${(colorFormats.rgbObj.b / 255) * 100}%`, backgroundColor: '#3b82f6' }}></div>
+                          </div>
+                          <span className="component-value">{colorFormats.rgbObj.b}</span>
+                        </div>
+                      </div>
                     </div>
-                    <div className="component-item">
-                      <span className="component-name">Saturation</span>
-                      <span className="component-num">{colorFormats.hslObj.s}%</span>
-                    </div>
-                    <div className="component-item">
-                      <span className="component-name">Lightness</span>
-                      <span className="component-num">{colorFormats.hslObj.l}%</span>
-                    </div>
-                  </div>
-                </div>
 
-                <div className="value-card">
-                  <h4>CMYK Components</h4>
-                  <div className="component-list">
-                    <div className="component-item">
-                      <span className="component-name">Cyan</span>
-                      <span className="component-num">{colorFormats.cmykObj.c}%</span>
+                    <div className="value-card">
+                      <h4>HSL Components</h4>
+                      <div className="component-list">
+                        <div className="component-item">
+                          <span className="component-name">Hue</span>
+                          <span className="component-num">{colorFormats.hslObj.h}°</span>
+                        </div>
+                        <div className="component-item">
+                          <span className="component-name">Saturation</span>
+                          <span className="component-num">{colorFormats.hslObj.s}%</span>
+                        </div>
+                        <div className="component-item">
+                          <span className="component-name">Lightness</span>
+                          <span className="component-num">{colorFormats.hslObj.l}%</span>
+                        </div>
+                      </div>
                     </div>
-                    <div className="component-item">
-                      <span className="component-name">Magenta</span>
-                      <span className="component-num">{colorFormats.cmykObj.m}%</span>
-                    </div>
-                    <div className="component-item">
-                      <span className="component-name">Yellow</span>
-                      <span className="component-num">{colorFormats.cmykObj.y}%</span>
-                    </div>
-                    <div className="component-item">
-                      <span className="component-name">Key (Black)</span>
-                      <span className="component-num">{colorFormats.cmykObj.k}%</span>
+
+                    <div className="value-card">
+                      <h4>CMYK Components</h4>
+                      <div className="component-list">
+                        <div className="component-item">
+                          <span className="component-name">Cyan</span>
+                          <span className="component-num">{colorFormats.cmykObj.c}%</span>
+                        </div>
+                        <div className="component-item">
+                          <span className="component-name">Magenta</span>
+                          <span className="component-num">{colorFormats.cmykObj.m}%</span>
+                        </div>
+                        <div className="component-item">
+                          <span className="component-name">Yellow</span>
+                          <span className="component-num">{colorFormats.cmykObj.y}%</span>
+                        </div>
+                        <div className="component-item">
+                          <span className="component-name">Key (Black)</span>
+                          <span className="component-num">{colorFormats.cmykObj.k}%</span>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-        )}
+            )}
           </div>
         </div>
         <AdSpace />
@@ -2701,13 +2711,13 @@ const CommentsSection = () => {
   return (
     <main className="main-content">
       <h1 className="main-title"><FaComments size={24} style={{ marginRight: '8px' }} />Community Comments</h1>
-      
+
       <div className="content-with-ad">
         <div className="main-section">
           <div className="feature-description">
             <p>Share your feedback, ask questions, or report issues. Join our community discussion, upvote helpful comments, and get responses from our team. Your input helps us improve the tool for everyone.</p>
           </div>
-          
+
           <div className="comments-container">
             {/* Comments Header */}
             <div className="comments-header">
@@ -2783,7 +2793,7 @@ const CommentsSection = () => {
             {/* Comments List */}
             <div className="comments-list">
               <h3>{filteredComments.length} {filterBy === 'all' ? 'Comments' : filterBy === 'questions' ? 'Questions' : 'Feedback'}</h3>
-              
+
               {filteredComments.length === 0 ? (
                 <div className="no-comments">
                   <FaComments size={48} style={{ opacity: 0.3 }} />
@@ -2804,9 +2814,9 @@ const CommentsSection = () => {
                         </div>
                         {comment.type === 'question' && <span className="comment-badge question">Question</span>}
                       </div>
-                      
+
                       <div className="comment-votes">
-                        <button 
+                        <button
                           className="vote-btn upvote"
                           onClick={() => handleVote(comment.id, true)}
                           title="Helpful"
@@ -2816,7 +2826,7 @@ const CommentsSection = () => {
                         <span className={`vote-count ${comment.votes > 0 ? 'positive' : comment.votes < 0 ? 'negative' : ''}`}>
                           {comment.votes}
                         </span>
-                        <button 
+                        <button
                           className="vote-btn downvote"
                           onClick={() => handleVote(comment.id, false)}
                           title="Not helpful"
@@ -2831,7 +2841,7 @@ const CommentsSection = () => {
                     </div>
 
                     <div className="comment-actions">
-                      <button 
+                      <button
                         className="reply-btn"
                         onClick={() => setReplyTo(replyTo === comment.id ? null : comment.id)}
                       >
@@ -2857,9 +2867,9 @@ const CommentsSection = () => {
                                   <span className="comment-time">{formatTimeAgo(reply.timestamp)}</span>
                                 </div>
                               </div>
-                              
+
                               <div className="comment-votes small">
-                                <button 
+                                <button
                                   className="vote-btn upvote"
                                   onClick={() => handleVote(reply.id, true, true, comment.id)}
                                 >
@@ -2868,7 +2878,7 @@ const CommentsSection = () => {
                                 <span className={`vote-count ${reply.votes > 0 ? 'positive' : reply.votes < 0 ? 'negative' : ''}`}>
                                   {reply.votes}
                                 </span>
-                                <button 
+                                <button
                                   className="vote-btn downvote"
                                   onClick={() => handleVote(reply.id, false, true, comment.id)}
                                 >
@@ -2971,7 +2981,7 @@ const Footer = () => (
       <div className="footer-section">
         <h3>About</h3>
         <p className="footer-desc">
-          Powerful developer tools for time conversion, JSON formatting, and encoding. 
+          Powerful developer tools for time conversion, JSON formatting, and encoding.
           Built for developers, by developers.
         </p>
         <div className="social-links">
@@ -3031,14 +3041,16 @@ const App = () => {
             <main className="main-content">
               <h1 className="main-title"><FiClock size={24} style={{ marginRight: '8px' }} />Converters</h1>
               <div className="converters-grid">
-                <div className="converters-column">
+                <div className="converters-column epoch-full-width">
                   <EpochConverter />
-                  <BatchConverter />
                 </div>
+                <AdSpace />
                 <div className="converters-column">
                   <DateToEpochConverter />
                 </div>
-                <AdSpace />
+                <div className="converters-column">
+                  <BatchConverter />
+                </div>
               </div>
             </main>
             <Footer />
@@ -3076,14 +3088,16 @@ const App = () => {
             <main className="main-content">
               <h1 className="main-title"><FiClock size={24} style={{ marginRight: '8px' }} />Converters</h1>
               <div className="converters-grid">
-                <div className="converters-column">
+                <div className="converters-column epoch-full-width">
                   <EpochConverter />
-                  <BatchConverter />
                 </div>
+                <AdSpace />
                 <div className="converters-column">
                   <DateToEpochConverter />
                 </div>
-                <AdSpace />
+                <div className="converters-column">
+                  <BatchConverter />
+                </div>
               </div>
             </main>
             <Footer />
